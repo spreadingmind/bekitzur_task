@@ -1,0 +1,84 @@
+Disclaimer: this is for proof only, and obviously shouldn't be considered as a part of an answer.
+I included it in order to show the raw thought process I usually make before starting to write code.
+
+*Writing in english is not a puff but a habit.
+-----------------------------------------------------------
+
+
+1 Сonditions: this sequence of words is not an entire dictionary. Otherwise the challenge
+would be senseless, I might just took all the first letters and name them an alphabet.
+Hence, as I should create an __algorithm__, the list of first letters is not enough, and
+I need to compare the order of letters in words.
+
+- "Remember that the file given is just an example of a list of words and an alphabet"
+and "Your algorithm should not be tailored specifically to deal just with this file" tell that
+the algorithm __should__ be not specific to this particular__, but deal with every file.
+-----------------------------
+Thus the concise task definition is: create an algorithm, that can determine the order of letters
+in any given alphabet, from the list of words sorted in lexicographic order.
+-----------------------------
+
+2 Observations:
+- Hence letters in words are not sorted alpabetically, the algorithm should only look at first
+__repeating letters__ in each word. Given that they're
+
+- Remember that lexicographic order also assumes the __size of a word__
+
+- If the next word starts from the same letter, the second letters are is compared, and so on.
+[ Either shorter word goes first in list, or the words in which after the same letters goes a
+a letter, that was used previously, or ? the next letters should be compared from the other part
+of a list]
+
+-What data structure is best for representing relations between letters?
+
+Presumably it is a graph. Which type?
+1) Directed -- as there is a UNIQUE order of symbols in alphabet. Orientation would show the
+lexigraphic order: from less to more lexigraphic.
+2) Acyclic -- as there in only direct way (by googling)
+Cool!
+
+3 Design
+
+- ? Algorithm should recursuvely return a sequence of letters in alphabetical order. The last
+return is an entire alphabet.
+
+- The algorithm is better to be efficient, and not take quadratic time.
+
+- Presumably the flow is:
+    0. Learn how to use graph modulue (build acyclic using avaliable methods)
+        upd: using networkx
+
+    1. Compare pairs of words -- write main algorithm for building graph
+       ! The graph shouldn't contain cycles. If so, there's an error in the dictionary itself
+        1) find all symbols of an alphabet and add them to Graph as nodes
+        2) run the function add_edges() on the list of words. It takes a pair, evaluates if the
+        find_order() is True for the pair and if so adds an edge
+        3) now we get a graph with letters as nodes and order as edges
+
+    2. Determine the longest path and with non-repeated items
+        How: using depth-first search, as it is looknig for a longer path(by googling)
+        ! Also need to write an algorithm, that goes from the root to the next node, __marking__
+        already visited nodes
+        1) Determine the root: this should be a node, that __doesn't have a precessor!
+        2) From root, mark next node as visited:
+        - make the graph in format
+
+
+    3. Refactor and optimize code
+    - Make one funtcion that calls others in order
+    - if __name__ == 'main' stuff
+
+
+    4. If have time left: rewrite graph using own class and methods
+
+
+
+4 Testing
+
+- In order to test my algorithm, the most obvious decision would be to input a sorted list of
+english, russian, and other. But this is suboptimal of course, need to write tests
+
+- I didn't write own tests, but will do it if have time left
+a) look for ready tests online
+b)
+
