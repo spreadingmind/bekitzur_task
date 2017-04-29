@@ -1,4 +1,4 @@
-import networkx as nx #this is a simple module for building graphs
+import networkx as nx # a module for building graphs
 
 class Solution:
     def make_graph_from_letters(self, words, graph):
