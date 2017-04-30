@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import networkx as nx # a module for building graphs
 
 class Solution:
@@ -45,7 +46,8 @@ class Solution:
                 return node                       #returns the first letter of an alphabet
 
     def visit(self, graph, start_node, visited):
-        #
+        #depth-first search: mark all children on the way as visited to provide a longest
+        #path in topological order
         if start_node not in visited:
             children = [child for child in graph.successors(start_node) if
                         (start_node, child) in graph.edges()]
@@ -59,8 +61,9 @@ class Solution:
         return nx.topological_sort_recursive(graph)
 
     def solve(self, filename):
-        with open(filename, 'r') as file:
-            words = tuple([line.rstrip(' \n') for line in file.readlines()])
+        with open(filename, 'r', encoding="utf-8") as file:
+            words = tuple([line.rstrip(' \n').lower() for line in file.readlines()])
+        print(words)
         graph = nx.DiGraph()
         self.make_graph_from_letters(words, graph)
         self.add_edges(graph, words)
@@ -73,4 +76,4 @@ class Solution:
 
 if __name__ == '__main__':
     my_solution = Solution()
-    print('My answer: ', my_solution.solve('alphabet.txt'))
+    print('My answer: ', my_solution.solve('<filename.txt>')
