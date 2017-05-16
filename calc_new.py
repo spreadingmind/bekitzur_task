@@ -1,3 +1,9 @@
+'''
+A calculator that turns expression in a string to number in words.
+Usage: python3 calc_new.py '(8 + 100) + 90*10000'
+'''
+
+
 import sys
 
 num_dict = {0 : 'zero', 1 : 'one', 2 : 'two', 3 : 'three', 4 : 'four', 5 : 'five',
