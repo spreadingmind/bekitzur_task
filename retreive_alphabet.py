@@ -76,4 +76,5 @@ class Solution:
 
 if __name__ == '__main__':
     my_solution = Solution()
-    print('My answer: ', my_solution.solve('<filename.txt>')
+    print('My answer: ', my_solution.solve('<filename>'))
+
