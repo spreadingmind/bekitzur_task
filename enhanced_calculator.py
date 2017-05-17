@@ -18,7 +18,7 @@ def get_input(expression):
 def turn_number_to_words(number, num_dict, order_dict):
     is_positive = number >= 0
     try:
-        words = turn_positive_number_to_words(abs(number), num_dict, order_dict)
+        words = turn_positive_number_to_words(number, num_dict, order_dict)
     except KeyError:
         return ('Number too large')
     sign = '' if is_positive else 'minus '
@@ -57,12 +57,12 @@ def turn_positive_number_to_words(number, num_dict, order_dict):
             order *= step
         return word_representation
 
-# expression = ''.join(sys.argv[1:])
-# number = get_input(expression)
-# print (turn_number_to_words(number, num_dict, order_dict))
+expression = ''.join(sys.argv[1:])
+number = get_input(expression)
+print (turn_number_to_words(number, num_dict, order_dict))
 
 
 # for function testing:
-test_numbers = [0, -187, -87600, 123554, 212334556, 100200300400587887800]
-for i in test_numbers:
-    print (i, turn_number_to_words(i, num_dict, order_dict))
+# test_numbers = [0, -187, -87600, 123554, 212334556, 100200300400587887800]
+# for i in test_numbers:
+#     print (i, turn_number_to_words(i, num_dict, order_dict))
