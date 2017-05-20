@@ -1,3 +1,5 @@
+#This was last working versuion
+
 import sys
 
 num_dict = {0 : 'zero', 1 : 'one', 2 : 'two', 3 : 'three', 4 : 'four', 5 : 'five',
@@ -9,22 +11,26 @@ num_dict = {0 : 'zero', 1 : 'one', 2 : 'two', 3 : 'three', 4 : 'four', 5 : 'five
             70 : 'seventy', 80 : 'eighty', 90 : 'ninety'}
 order_dict = {1: '', 1000: 'thousand', 1000000: 'million', 1000000000: 'billion', 1000000000000: 'trillion'}
 
+test_numbers = [0, 12, 89, -187, -87600, 123554, 212334556, -78927512221, 100200300400587887800]
+
 
 def get_input(expression):
     if not expression:
         raise ValueError("Number must be non-empty")
     return eval(expression)
 
-def turn_number_to_words(number, num_dict, order_dict):
-    is_positive = number >= 0
-    try:
-        words = turn_positive_number_to_words(number, num_dict, order_dict)
-    except KeyError:
-        return ('Number too large')
-    sign = '' if is_positive else 'minus '
-    return sign + words
+def add_sign(main_function):
+    def change_output(number, num_dict, order_dict):
+        is_positive = number >= 0
+        try:
+            words = main_function(abs(number), num_dict, order_dict)
+        except KeyError:
+            return ('Number too large')
+        sign = '' if is_positive else 'minus '
+        return sign + words
+    return change_output
 
-
+@add_sign
 def turn_positive_number_to_words(number, num_dict, order_dict):
 
     def small_number_to_words(number):
@@ -43,7 +49,6 @@ def turn_positive_number_to_words(number, num_dict, order_dict):
             rest = small_number_to_words(number % 100)
             return hundreds if number % 100 == 0 else hundreds + ' and ' + rest
 
-
     if number < 1000:
         return small_number_to_words(number)
     else:
@@ -51,18 +56,18 @@ def turn_positive_number_to_words(number, num_dict, order_dict):
         step = 1000
         word_representation = ''
         while number > 0:
-            word_representation = small_number_to_words(abs(number) % step) + ' ' +\
+            word_representation = small_number_to_words(number % step) + ' ' +\
                                   order_dict[order] + ' ' + word_representation
             number //= step
             order *= step
         return word_representation
 
+def get_output(test_number):
+    return turn_positive_number_to_words(test_number, num_dict, order_dict)
+
 expression = ''.join(sys.argv[1:])
 number = get_input(expression)
-print (turn_number_to_words(number, num_dict, order_dict))
+print (get_output(number))
 
-
-# for function testing:
-# test_numbers = [0, -187, -87600, 123554, 212334556, 100200300400587887800]
 # for i in test_numbers:
-#     print (i, turn_number_to_words(i, num_dict, order_dict))
+#     print (i, get_output(i))
